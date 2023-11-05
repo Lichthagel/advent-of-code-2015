@@ -12,3 +12,4 @@ function(add_day day)
 endfunction()
 
 add_day(01)
+add_day(02)
