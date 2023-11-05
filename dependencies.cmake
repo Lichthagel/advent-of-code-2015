@@ -9,3 +9,5 @@ FetchContent_MakeAvailable(googletest)
 
 add_library(md5 lib/md5/md5.cpp)
 target_include_directories(md5 PUBLIC ${PROJECT_SOURCE_DIR}/lib/md5)
+
+find_package(OpenMP)

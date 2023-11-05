@@ -3,8 +3,10 @@
 #include <filesystem>
 #include <fstream>
 #include <numeric>
-
 #include <md5.h>
+#ifdef OPENMP
+#include <omp.h>
+#endif
 
 #ifdef PART1
 #define LEADING_ZEROS "00000"
@@ -17,23 +19,52 @@
 
 size_t run(std::string input)
 {
-  size_t i = 0;
-  std::string hash;
+  uint32_t result = UINT32_MAX;
 
-  while (true)
+#ifdef OPENMP
+#pragma omp parallel
+#endif
   {
-    std::string concatened = input + std::to_string(i);
-    hash = MD5(concatened).hexdigest();
+#ifdef OPENMP
+    int id = omp_get_thread_num();
+    int nthreads = omp_get_num_threads();
+#else
+    int id = 0;
+    int nthreads = 1;
+#endif
 
-    if (hash.substr(0, NUM_LEADING_ZEROS) == LEADING_ZEROS)
+    uint32_t i = id;
+    std::string hash;
+
+    while (true)
     {
-      break;
-    }
+      std::string concatened = input + std::to_string(i);
+      hash = MD5(concatened).hexdigest();
 
-    i++;
+      if (hash.substr(0, NUM_LEADING_ZEROS) == LEADING_ZEROS)
+      {
+#ifdef OPENMP
+#pragma omp critical
+#endif
+        {
+          if (i < result)
+          {
+            result = i;
+          }
+        }
+        break;
+      }
+
+      if (result != UINT32_MAX)
+      {
+        break;
+      }
+
+      i += nthreads;
+    }
   }
 
-  return i;
+  return result;
 }
 
 #ifndef TEST
