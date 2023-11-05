@@ -1,0 +1,34 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/alpine
+{
+	"name": "Alpine",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"josetr.cmake-language-support-vscode",
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools"
+			],
+			"settings": {
+				"dotnetAcquisitionExtension.existingDotnetPath": [
+					{
+						"extensionId": "josetr.cmake-language-support-vscode",
+						"path": "/usr/bin/dotnet"
+					}
+				],
+				"cmake.languageSupport.dotnetPath": "/usr/bin/dotnet"
+			}
+		}
+	}
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
