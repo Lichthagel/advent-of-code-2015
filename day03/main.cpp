@@ -29,21 +29,8 @@ namespace std
   };
 }
 
-int main(int argc, char const *argv[])
+size_t run(std::string input)
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string input;
-
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
-
-  input_stream >> input;
-  input_stream.close();
-
   std::unordered_set<Position> visited;
 
   Position santa1(0, 0);
@@ -81,7 +68,27 @@ int main(int argc, char const *argv[])
     visited.insert(current);
   }
 
-  std::cout << visited.size() << std::endl;
+  return visited.size();
+}
+
+#ifndef TEST
+int main(int argc, char const *argv[])
+{
+  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
+  std::ifstream input_stream(input_path);
+  std::string input;
+
+  if (!input_stream.is_open())
+  {
+    std::cout << "Unable to open file" << std::endl;
+    return 1;
+  }
+
+  input_stream >> input;
+  input_stream.close();
+
+  std::cout << run(input) << std::endl;
 
   return 0;
 }
+#endif
