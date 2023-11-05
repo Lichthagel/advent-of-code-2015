@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
     return 1;
   }
 
-  unsigned int sum = 0;
+  size_t sum = 0;
 
   while (std::getline(input_stream, line))
   {

@@ -6,10 +6,10 @@
 
 struct Position
 {
-  ssize_t x;
-  ssize_t y;
+  int x;
+  int y;
 
-  Position(ssize_t x, ssize_t y) : x(x), y(y) {}
+  Position(int x, int y) : x(x), y(y) {}
 
   bool operator==(const Position &other) const
   {
@@ -24,7 +24,7 @@ namespace std
   {
     std::size_t operator()(const Position &position) const
     {
-      return std::hash<ssize_t>()(position.x) ^ std::hash<ssize_t>()(position.y);
+      return std::hash<int>()(position.x) ^ std::hash<int>()(position.y);
     }
   };
 }
