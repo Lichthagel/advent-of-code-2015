@@ -53,3 +53,5 @@ if(OpenMP_CXX_FOUND)
   additional_compile_definitions(04 OPENMP)
   link_additional_libs(04 OpenMP::OpenMP_CXX)
 endif()
+
+add_day(05)
