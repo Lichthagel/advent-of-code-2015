@@ -55,3 +55,4 @@ if(OpenMP_CXX_FOUND)
 endif()
 
 add_day(05)
+add_day(06)
