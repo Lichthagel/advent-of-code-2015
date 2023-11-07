@@ -4,7 +4,7 @@
 #include <fstream>
 #include <numeric>
 #include <md5.h>
-#ifdef OPENMP
+#ifdef _OPENMP
 #include <omp.h>
 #endif
 
@@ -21,11 +21,13 @@ size_t run(std::string input)
 {
   uint32_t result = UINT32_MAX;
 
-#ifdef OPENMP
+#ifdef _OPENMP
+  std::cout << "OpenMP enabled with " << omp_get_max_threads() << " threads" << std::endl;
+
 #pragma omp parallel
 #endif
   {
-#ifdef OPENMP
+#ifdef _OPENMP
     int id = omp_get_thread_num();
     int nthreads = omp_get_num_threads();
 #else
@@ -43,7 +45,7 @@ size_t run(std::string input)
 
       if (hash.substr(0, NUM_LEADING_ZEROS) == LEADING_ZEROS)
       {
-#ifdef OPENMP
+#ifdef _OPENMP
 #pragma omp critical
 #endif
         {

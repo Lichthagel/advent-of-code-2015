@@ -35,13 +35,6 @@ function(add_day day)
   endif()
 endfunction()
 
-function(additional_compile_definitions day defs)
-  target_compile_definitions(day${day}_p1 PRIVATE ${defs})
-  target_compile_definitions(day${day}_p2 PRIVATE ${defs})
-  target_compile_definitions(day${day}_p1_test PRIVATE ${defs})
-  target_compile_definitions(day${day}_p2_test PRIVATE ${defs})
-endfunction()
-
 function(link_additional_libs day libs)
   target_link_libraries(day${day}_p1 PRIVATE ${libs})
   target_link_libraries(day${day}_p2 PRIVATE ${libs})
@@ -56,7 +49,6 @@ add_day(04)
 link_additional_libs(04 md5)
 
 if(OpenMP_CXX_FOUND)
-  additional_compile_definitions(04 OPENMP)
   link_additional_libs(04 OpenMP::OpenMP_CXX)
 endif()
 
