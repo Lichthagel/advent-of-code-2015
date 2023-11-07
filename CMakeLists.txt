@@ -62,3 +62,4 @@ endif()
 
 add_day(05)
 add_day(06)
+add_day(07)
