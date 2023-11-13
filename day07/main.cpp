@@ -1,11 +1,11 @@
-#include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <unordered_map>
 #include <cassert>
 #include <optional>
 #include <vector>
 #include <string>
+#include <cstdint>
+#include <input.hpp>
 
 class Wire
 {
@@ -355,24 +355,14 @@ void Wiring::reset()
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string line;
-
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
+  Input input(__FILE__);
 
   Wiring wiring;
 
-  while (std::getline(input_stream, line))
+  for (std::string line : input)
   {
     wiring.parse(line);
   }
-
-  input_stream.close();
 
   uint16_t part1_a = wiring.evaluate("a");
 

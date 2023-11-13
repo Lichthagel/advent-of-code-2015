@@ -1,8 +1,6 @@
-#include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <string>
-#include <utility>
+#include <input.hpp>
 
 std::pair<size_t, size_t> run(std::string line)
 {
@@ -55,20 +53,12 @@ std::pair<size_t, size_t> run(std::string line)
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string line;
-
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
+  Input input(__FILE__);
 
   size_t sum_in = 0;
   size_t sum_out = 0;
 
-  while (std::getline(input_stream, line))
+  for (std::string line : input)
   {
     auto result = run(line);
 

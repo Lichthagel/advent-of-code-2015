@@ -1,9 +1,7 @@
 #include <array>
-#include <cstddef>
 #include <string>
-#include <filesystem>
-#include <fstream>
 #include <iostream>
+#include <input.hpp>
 
 #ifdef PART1
 #define GRID_TYPE bool
@@ -162,19 +160,11 @@ size_t Grid::nlights_on()
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string line;
-
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
+  Input input(__FILE__);
 
   Grid grid;
 
-  while (std::getline(input_stream, line))
+  for (std::string line : input)
   {
     Instruction instruction(line);
 

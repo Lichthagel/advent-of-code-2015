@@ -1,9 +1,8 @@
 #include <iostream>
 #include <string>
-#include <filesystem>
-#include <fstream>
-#include <numeric>
-#include <md5.h>
+#include <cstdint>
+#include <md5.hpp>
+#include <input.hpp>
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -72,20 +71,9 @@ size_t run(std::string input)
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string input;
+  Input input(__FILE__);
 
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
-
-  input_stream >> input;
-  input_stream.close();
-
-  std::cout << run(input) << std::endl;
+  std::cout << run(*input) << std::endl;
 
   return 0;
 }

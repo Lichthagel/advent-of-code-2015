@@ -1,8 +1,7 @@
 #include <string>
-#include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <input.hpp>
 
 size_t run(std::string line)
 {
@@ -44,19 +43,11 @@ size_t run(std::string line)
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string line;
-
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
+  Input input(__FILE__);
 
   size_t sum = 0;
 
-  while (std::getline(input_stream, line))
+  for (std::string line : input)
   {
     sum += run(line);
   }

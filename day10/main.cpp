@@ -1,7 +1,6 @@
 #include <string>
-#include <filesystem>
-#include <fstream>
 #include <iostream>
+#include <input.hpp>
 
 #ifdef PART1
 #define ITERATIONS 40
@@ -43,25 +42,16 @@ std::string run(std::string s)
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string input;
+  Input input(__FILE__);
 
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
-
-  input_stream >> input;
-  input_stream.close();
+  std::string s = *input;
 
   for (int i = 0; i < ITERATIONS; i++)
   {
-    input = run(input);
+    s = run(s);
   }
 
-  std::cout << input.length() << std::endl;
+  std::cout << s.length() << std::endl;
 
   return 0;
 }

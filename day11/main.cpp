@@ -1,7 +1,6 @@
-#include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <string>
+#include <input.hpp>
 
 class Password
 {
@@ -114,20 +113,9 @@ bool Password::isValid()
 #ifndef TEST
 int main(int argc, char const *argv[])
 {
-  auto input_path = std::filesystem::path(__FILE__).parent_path().append("input.txt");
-  std::ifstream input_stream(input_path);
-  std::string input;
+  Input input(__FILE__);
 
-  if (!input_stream.is_open())
-  {
-    std::cout << "Unable to open file" << std::endl;
-    return 1;
-  }
-
-  input_stream >> input;
-  input_stream.close();
-
-  Password password(input);
+  Password password(*input);
 
   password.next();
 
