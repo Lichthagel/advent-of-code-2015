@@ -29,9 +29,9 @@ TEST(Day06_Part1, Example2_2)
 {
   Grid grid;
 
-  for (std::array<bool, 1000> &row : grid.grid)
+  for (std::vector<bool> &row : grid.grid)
   {
-    row.fill(true);
+    row.assign(1000, true);
   }
 
   Instruction instruction("toggle 0,0 through 999,0");
@@ -56,9 +56,9 @@ TEST(Day06_Part1, Example3_2)
 {
   Grid grid;
 
-  for (std::array<bool, 1000> &row : grid.grid)
+  for (std::vector<bool> &row : grid.grid)
   {
-    row.fill(true);
+    row.assign(1000, true);
   }
 
   Instruction instruction("turn off 499,499 through 500,500");

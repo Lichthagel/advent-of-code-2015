@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include <string>
 #include <iostream>
 #include <input.hpp>
@@ -75,7 +75,7 @@ class Grid
 {
 private:
 public:
-  std::array<std::array<GRID_TYPE, 1000>, 1000> grid;
+  std::vector<std::vector<GRID_TYPE>> grid;
   Grid();
   ~Grid();
   void apply(Instruction instruction);
@@ -84,9 +84,12 @@ public:
 
 Grid::Grid()
 {
-  for (std::array<GRID_TYPE, 1000> &row : this->grid)
+  this->grid.resize(1000);
+
+  for (std::vector<GRID_TYPE> &row : this->grid)
   {
-    row.fill(GRID_DEFAULT);
+    row.resize(1000);
+    row.assign(1000, GRID_DEFAULT);
   }
 }
 
