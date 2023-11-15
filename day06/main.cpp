@@ -88,7 +88,6 @@ Grid::Grid()
 
   for (std::vector<GRID_TYPE> &row : this->grid)
   {
-    row.resize(1000);
     row.assign(1000, GRID_DEFAULT);
   }
 }
