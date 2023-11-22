@@ -44,6 +44,11 @@ function(link_additional_libs day libs)
   target_link_libraries(day${day}_p2_test PRIVATE ${libs})
 endfunction()
 
+add_executable(template EXCLUDE_FROM_ALL template/main.cpp)
+target_link_libraries(template PRIVATE utils)
+add_executable(template_test EXCLUDE_FROM_ALL template/test.cpp)
+target_link_libraries(template_test PRIVATE utils GTest::gtest_main)
+
 add_day(01)
 add_day(02)
 add_day(03)
