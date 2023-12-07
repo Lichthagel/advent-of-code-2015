@@ -8,10 +8,15 @@
     flake-utils,
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
-
       systems = flake-utils.lib.defaultSystems;
 
-      perSystem = {config,lib,pkgs,system,...}: {
+      perSystem = {
+        config,
+        lib,
+        pkgs,
+        system,
+        ...
+      }: {
         devShells.default = pkgs.mkShell {
           name = "aoc-2015";
 
@@ -20,10 +25,10 @@
             cmake
             gcc-unwrapped
             llvmPackages.openmp
+            just
           ];
         };
       };
-
     };
 
   inputs = {
