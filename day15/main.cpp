@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <optional>
 
 class Ingredient
 {
@@ -51,13 +52,14 @@ class Kitchen
 private:
   std::vector<Ingredient> ingredients;
   int score(int *amounts);
-  int maxScoreInner(int *amounts, size_t index, int remainingTeaspoons);
+  int calories(int *amounts);
+  int maxScoreInner(int *amounts, size_t index, int remainingTeaspoons, std::optional<int> calories = std::nullopt);
 
 public:
   Kitchen(Input &input);
   Kitchen(std::vector<Ingredient> ingredients);
   ~Kitchen();
-  int maxScore(int teaspoons);
+  int maxScore(int teaspoons, std::optional<int> calories = std::nullopt);
 };
 
 int Kitchen::score(int *amounts)
@@ -98,12 +100,29 @@ int Kitchen::score(int *amounts)
   return capacity * durability * flavor * texture;
 }
 
-int Kitchen::maxScoreInner(int *amounts, size_t index, int remainingTeaspoons)
+int Kitchen::calories(int *amounts)
+{
+  int calories = 0;
+
+  for (size_t i = 0; i < this->ingredients.size(); i++)
+  {
+    calories += this->ingredients[i].calories * amounts[i];
+  }
+
+  return calories;
+}
+
+int Kitchen::maxScoreInner(int *amounts, size_t index, int remainingTeaspoons, std::optional<int> calories)
 {
   if (index == this->ingredients.size() - 1)
   {
     amounts[index] = remainingTeaspoons;
 
+    if (calories.has_value() && this->calories(amounts) != calories.value())
+    {
+      return 0;
+    }
+    
     return this->score(amounts);
   }
 
@@ -113,7 +132,7 @@ int Kitchen::maxScoreInner(int *amounts, size_t index, int remainingTeaspoons)
   {
     amounts[index] = i;
 
-    int score = this->maxScoreInner(amounts, index + 1, remainingTeaspoons - i);
+    int score = this->maxScoreInner(amounts, index + 1, remainingTeaspoons - i, calories);
 
     if (score > max)
     {
@@ -141,11 +160,11 @@ Kitchen::~Kitchen()
 {
 }
 
-int Kitchen::maxScore(int teaspoons)
+int Kitchen::maxScore(int teaspoons, std::optional<int> calories)
 {
   int *amounts = new int[this->ingredients.size()];
 
-  int max = this->maxScoreInner(amounts, 0, teaspoons);
+  int max = this->maxScoreInner(amounts, 0, teaspoons, calories);
 
   delete[] amounts;
 
@@ -156,10 +175,16 @@ int Kitchen::maxScore(int teaspoons)
 int main(int argc, char const *argv[])
 {
   Input input(__FILE__);
-  
+
   Kitchen kitchen(input);
 
+#ifdef PART1
   std::cout << kitchen.maxScore(100) << std::endl;
+#endif
+
+#ifdef PART2
+  std::cout << kitchen.maxScore(100, 500) << std::endl;
+#endif
 
   return 0;
 }
